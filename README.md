@@ -36,7 +36,7 @@ conda install -c bioconda google-sparsehash
 
 (3) For the SparseConv, we apply the implementation of [spconv](https://github.com/traveller59/spconv). The repository is recursively downloaded at step (1). We use the version 1.0 of spconv. 
 
-**Note:** We further modify `spconv\spconv\functional.py` to make `grad_output` contiguous. Make sure you use our modified `spconv`.
+**Note:** The author of PointGroup further modified `spconv\spconv\functional.py` to make `grad_output` contiguous. Make sure you use our modified `spconv`.
 
 * To compile `spconv`, firstly install the dependent libraries. 
 ```
@@ -73,107 +73,97 @@ python setup.py develop
 
 ## Data Preparation
 
-(1) Download the [ScanNet](http://www.scan-net.org/) v2 dataset.
+* Download the [ScanNet](http://www.scan-net.org/) v2 dataset.
 
-(2) Put the data in the corresponding folders. 
-* Copy the files `[scene_id]_vh_clean_2.ply`,  `[scene_id]_vh_clean_2.labels.ply`,  `[scene_id]_vh_clean_2.0.010000.segs.json`  and `[scene_id].aggregation.json`  into the `dataset/scannetv2/train` and `dataset/scannetv2/val` folders according to the ScanNet v2 train/val [split](https://github.com/ScanNet/ScanNet/tree/master/Tasks/Benchmark). 
+* Put the data in the corresponding folders. 
 
-* Copy the files `[scene_id]_vh_clean_2.ply` into the `dataset/scannetv2/test` folder according to the ScanNet v2 test [split](https://github.com/ScanNet/ScanNet/tree/master/Tasks/Benchmark). 
+* Put the file `scannetv2-labels.combined.tsv` in the `data/` folder.
 
-* Put the file `scannetv2-labels.combined.tsv` in the `dataset/scannetv2` folder.
+* Change the path in prepare_data_otoc.py Line 20. 
 
-The dataset files are organized as follows.
 ```
-PointGroup
-├── dataset
-│   ├── scannetv2
-│   │   ├── train
-│   │   │   ├── [scene_id]_vh_clean_2.ply & [scene_id]_vh_clean_2.labels.ply & [scene_id]_vh_clean_2.0.010000.segs.json & [scene_id].aggregation.json
-│   │   ├── val
-│   │   │   ├── [scene_id]_vh_clean_2.ply & [scene_id]_vh_clean_2.labels.ply & [scene_id]_vh_clean_2.0.010000.segs.json & [scene_id].aggregation.json
-│   │   ├── test
-│   │   │   ├── [scene_id]_vh_clean_2.ply 
-│   │   ├── scannetv2-labels.combined.tsv
+cd data/
+python prepare_data_otoc.py 
 ```
 
-(3) Generate input files `[scene_id]_inst_nostuff.pth` for instance segmentation.
-```
-cd dataset/scannetv2
-python prepare_data_inst.py --data_split train
-python prepare_data_inst.py --data_split val
-python prepare_data_inst.py --data_split test
-```
+* Split the generated files into the `data/train_weakly` and `data/val_weakly` folders according to the ScanNet v2 train/val [split](https://github.com/ScanNet/ScanNet/tree/master/Tasks/Benchmark). 
 
-## Training
-```
-CUDA_VISIBLE_DEVICES=0 python train.py --config config/pointgroup_run1_scannet.yaml 
-```
-You can start a tensorboard session by
-```
-tensorboard --logdir=./exp --port=6666
-```
+
+## Pretrained Model
+We provide a pretrained model trained on ScanNet v2 dataset. Download it [here](). Its performance on ScanNet v2 validation set is 72.01 mIoU.
+
+
 
 ## Inference and Evaluation
 
-(1) If you want to evaluate on validation set, prepare the `.txt` instance ground-truth files as the following.
-```
-cd dataset/scannetv2
-python prepare_data_inst_gttxt.py
-```
-Make sure that you have prepared the `[scene_id]_inst_nostuff.pth` files before. 
+(1) 3D U-Net Evaluation 
 
-(2) Test and evaluate. 
+set the data_root in config/pointgroup_run1_scannet.yaml
 
-a. To evaluate on validation set, set `split` and `eval` in the config file as `val` and `True`. Then run 
 ```
-CUDA_VISIBLE_DEVICES=0 python test.py --config config/pointgroup_run1_scannet.yaml
+cd 3D-U-Net
+python test.py --config config/pointgroup_run1_scannet.yaml --pretrain pointgroup_run1_scannet-000001250.pth
 ```
-An alternative evaluation method is to set `save_instance` as `True`, and evaluate with the ScanNet official [evaluation script](https://github.com/ScanNet/ScanNet/blob/master/BenchmarkScripts/3d_evaluation/evaluate_semantic_instance.py).
+Its performance on ScanNet v2 validation set is 68.96 mIoU.
 
-b. To run on test set, set (`split`, `eval`, `save_instance`) as (`test`, `False`, `True`). Then run
+(2) Relation Net Evaluation 
+
 ```
-CUDA_VISIBLE_DEVICES=0 python test.py --config config/pointgroup_run1_scannet.yaml
+cd relation
+python test.py --config config/pointgroup_run1_scannet.yaml --pretrain pointgroup_run1_scannet-000002891_weight.pth
 ```
 
-c. To test with a pretrained model, run
+(3) Overall Evaluation
+
 ```
-CUDA_VISIBLE_DEVICES=0 python test.py --config config/pointgroup_default_scannet.yaml --pretrain $PATH_TO_PRETRAIN_MODEL$
+cd merge
+python test.py --config config/pointgroup_run1_scannet.yaml
 ```
 
-## Pretrained Model
-We provide a pretrained model trained on ScanNet v2 dataset. Download it [here](https://drive.google.com/file/d/1wGolvj73i-vNtvsHhg_KXonNH2eB_6-w/view?usp=sharing). Its performance on ScanNet v2 validation set is 35.2/57.1/71.4 in terms of mAP/mAP50/mAP25.
 
+## Self Training
 
-## Visualize
-To visualize the point cloud, you should first install [mayavi](https://docs.enthought.com/mayavi/mayavi/installation.html). Then you could visualize by running
+(1) Train 3D U-Net
+
+set the data_root/dataset in config/pointgroup_run1_scannet.yaml
+
 ```
-cd util 
-python visualize.py --data_root $DATA_ROOT$ --result_root $RESULT_ROOT$ --room_name $ROOM_NAME$ --room_split $ROOM_SPLIT$ --task $TASK$
+cd 3D-U-Net
+CUDA_VISIBLE_DEVICES=0 python train.py --config config/pointgroup_run1_scannet.yaml 
 ```
-The visualization task could be `input`, `instance_gt`, `instance_pred`, `semantic_pred` and `semantic_gt`.
 
-## Results on ScanNet Benchmark 
-Quantitative results on ScanNet test set at the submisison time.
-![scannet_result](https://github.com/llijiang/PointGroup/blob/master/doc/scannet_benchmark.png)
+(2) Generate features and predictions of 3D U-Net
 
-## TODO List
-- [ ] Distributed multi-GPU training
-
-## Citation
-If you find this work useful in your research, please cite:
 ```
-@article{jiang2020pointgroup,
-  title={PointGroup: Dual-Set Point Grouping for 3D Instance Segmentation},
-  author={Jiang, Li and Zhao, Hengshuang and Shi, Shaoshuai and Liu, Shu and Fu, Chi-Wing and Jia, Jiaya},
-  journal={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year={2020}
-}
+CUDA_VISIBLE_DEVICES=0 python test_train.py --config config/pointgroup_run1_scannet.yaml --pretrain $PATH_TO_THE_MODEL$.pth
 ```
+
+(3) Train Relation Net
+
+set the data_root/dataset in config/pointgroup_run1_scannet.yaml
+
+```
+cd relation
+CUDA_VISIBLE_DEVICES=0 python train.py --config config/pointgroup_run1_scannet.yaml 
+```
+
+(4) Generate features and predictions of Relation Net
+
+```
+CUDA_VISIBLE_DEVICES=0 python test_train.py --config config/pointgroup_run1_scannet.yaml --pretrain $PATH_TO_THE_MODEL$_weight.pth
+```
+
+(5) Merge the Results via Graph Propagation
+
+```
+cd merge
+CUDA_VISIBLE_DEVICES=0 python test_train.py --config config/pointgroup_run1_scannet.yaml
+```
+
 
 ## Acknowledgement
-This repo is built upon several repos, e.g., [SparseConvNet](https://github.com/facebookresearch/SparseConvNet), [spconv](https://github.com/traveller59/spconv) and [ScanNet](https://github.com/ScanNet/ScanNet). 
+This repo is built upon several repos, e.g., [PointGrouop](https://github.com/Jia-Research-Lab/PointGroup), [SparseConvNet](https://github.com/facebookresearch/SparseConvNet), [spconv](https://github.com/traveller59/spconv) and [ScanNet](https://github.com/ScanNet/ScanNet). 
 
 ## Contact
-If you have any questions or suggestions about this repo, please feel free to contact me (lijiang@cse.cuhk.edu.hk).
-
+If you have any questions or suggestions about this repo, please feel free to contact me (liuzhengzhelzz@gmail.com).
 

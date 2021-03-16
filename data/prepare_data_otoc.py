@@ -17,25 +17,8 @@ opt = parser.parse_args()
 
 split = opt.data_split
 print('data split: {}'.format(split))
-files = sorted(glob.glob('/media/lzz/ElementsSE1/scannetv2/scannetv2/scans/scene*_*/*_vh_clean_2.ply'))
-
-
-
-if opt.data_split != 'test':
-    pass
-
-
-def f_test(fn):
-    print(fn)
-
-    f = plyfile.PlyData().read(fn)
-    points = np.array([list(x) for x in f.elements[0]])
-    coords = np.ascontiguousarray(points[:, :3] - points[:, :3].mean(0))
-    colors = np.ascontiguousarray(points[:, 3:6]) / 127.5 - 1
-
-    torch.save((coords, colors), fn[:-15] + '_inst_nostuff.pth')
-    print('Saving to ' + fn[:-15] + '_inst_nostuff.pth')
-
+files = sorted(glob.glob('/home/lzz/sdc1/scannetv2/scannetv2/scans/scene*_*/*_vh_clean_2.ply'))
+print (len(files))
 
 dic={}
 dic['wall']=0
@@ -140,8 +123,9 @@ def f(fn):
             pointids += segid_to_pointid[segid]
         instance_labels[pointids] = i
         assert(len(np.unique(sem_labels[pointids])) == 1)
-
-    torch.save((coords, colors, sem_labels, groups, seg), 'train/'+name+'_inst_nostuff.pth')
+    mask=np.where(instance_labels==-100)
+    sem_labels[mask]=-100
+    torch.save((coords, colors, sem_labels, groups, seg), 'train_weakly/'+name+'_inst_nostuff.pth')
     print('Saving to ' + fn[:-15]+'_inst_nostuff.pth')
 
 # for fn in files:
