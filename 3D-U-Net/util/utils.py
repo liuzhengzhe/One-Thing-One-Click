@@ -120,7 +120,7 @@ def is_multiple(num, multiple):
 def checkpoint_save(model, exp_path, exp_name, epoch, save_freq=16, use_cuda=True):
     f = os.path.join(exp_path, exp_name + '-%09d'%epoch + '.pth')
     #logger.info('Saving ' + f)
-    m#odel.cpu()
+    #model.cpu()
     torch.save(model.state_dict(), f)
     if use_cuda:
         model.cuda()
