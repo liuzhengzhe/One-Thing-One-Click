@@ -90,7 +90,7 @@ python prepare_data_otoc.py
 
 
 ## Pretrained Model
-We provide a pretrained model trained on ScanNet v2 dataset. Download it [here](). Its performance on ScanNet v2 validation set is 72.01 mIoU.
+We provide a pretrained model trained on ScanNet v2 dataset. Download it [here](https://drive.google.com/drive/folders/1zqd-V-w1eQ5tpy3Gz6fxbYMaCPDx5nx1?usp=sharing). Its performance on ScanNet v2 validation set is 72.01 mIoU.
 
 
 
