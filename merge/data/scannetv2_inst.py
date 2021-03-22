@@ -78,11 +78,12 @@ class Dataset:
           cnt+=1        
           data=torch.load(i)
           name=i.split('/')[-1]
-          fn3 = self.data_root+'/scans/'+name[:12]+'/'+name[:12]+'_vh_clean_2.0.010000.segs.json'
+          '''fn3 = self.data_root+'/scans/'+name[:12]+'/'+name[:12]+'_vh_clean_2.0.010000.segs.json'
 
           with open(fn3) as jsondata:
             d = json.load(jsondata)
-            seg = d['segIndices']
+            seg = d['segIndices']'''
+          seg=data[-1]
             
           
 
