@@ -362,29 +362,9 @@ def model_fn_decorator(test=False):
             cnt+=1
 
         Q_ori=torch.log(U)
-        Q_ori_relation=torch.log(U_prod)
-        
-        
-        pair1=torch.unsqueeze(pair,1).repeat(1,pair.shape[0],1)
-        pair2=torch.transpose(pair1,0,1)
-        
 
-        diff1=torch.mean((pair1[:,:,:6]-pair2[:,:,:6]).pow(2),2)
-        diff2=torch.mean((pair1[:,:,6:]-pair2[:,:,6:]).pow(2),2)
-        
-
-        k=torch.mm(pair[:,:],torch.transpose(pair[:,:],0,1))
-        k_unary=torch.mm(pair_unary[:,:],torch.transpose(pair_unary[:,:],0,1))
-
-        
-        
-        
-        
-        deltaQ=torch.mm(k,U)
-        
-        delta_prod=torch.mm(k_unary,U_prod)
-        U_prod_new=U_prod+delta_prod*0.00002
-        U_new=U+deltaQ*0.00002
+        U_prod_new=U_prod 
+        U_new=U 
         
         
         avg=torch.nn.functional.softmax(U_new*U_prod_new*5,1)
@@ -401,6 +381,7 @@ def model_fn_decorator(test=False):
 
 
         pair_cct=torch.cat((pair,pair_unary/3.0),1).cpu()
+        print (torch.unique(pair), torch.unique(pair_unary))
         pair1=torch.unsqueeze(pair_cct,1).repeat(1,pair_cct.shape[0],1)
         pair2=torch.transpose(pair1,0,1)
         diff2=torch.sum((pair1-pair2).pow(2),2)
