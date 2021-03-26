@@ -160,6 +160,8 @@ cd merge
 CUDA_VISIBLE_DEVICES=0 python test_train.py --config config/pointgroup_run1_scannet.yaml
 ```
 
+(6) Repeat from (1) to (5) for self-training for 3 to 5 times
+
 
 ## Acknowledgement
 This repo is built upon several repos, e.g., [PointGrouop](https://github.com/Jia-Research-Lab/PointGroup), [SparseConvNet](https://github.com/facebookresearch/SparseConvNet), [spconv](https://github.com/traveller59/spconv) and [ScanNet](https://github.com/ScanNet/ScanNet). 
