@@ -1,5 +1,5 @@
 # One Thing One Click
-## One Thing One Click: A Self-Training Approach forWeakly Supervised 3D Semantic Segmentation (CVPR2021)
+## One Thing One Click: A Self-Training Approach for Weakly Supervised 3D Semantic Segmentation (CVPR2021)
 
 Code for the paper **One Thing One Click: A Self-Training Approach for Weakly Supervised 3D Semantic Segmentation**, CVPR 2021.
 
