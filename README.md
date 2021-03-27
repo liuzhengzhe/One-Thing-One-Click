@@ -1,11 +1,11 @@
 # One Thing One Click
 ## One Thing One Click: A Self-Training Approach forWeakly Supervised 3D Semantic Segmentation (CVPR2021)
 
-Code for the paper **One Thing One Click: A Self-Training Approach forWeakly Supervised 3D Semantic Segmentation**, CVPR 2021.
+Code for the paper **One Thing One Click: A Self-Training Approach for Weakly Supervised 3D Semantic Segmentation**, CVPR 2021.
 
 This code is based on PointGroup https://github.com/llijiang/PointGroup 
 
-**Authors**: Zhengzhe Liu, Xiaojuan Qi, Chi-wing Fu
+**Authors**: Zhengzhe Liu, Xiaojuan Qi, Chi-Wing Fu
 
 ## Installation
 
