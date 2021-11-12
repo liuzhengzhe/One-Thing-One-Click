@@ -29,7 +29,7 @@ STRUCTURE:
 
 TRAIN:
   epochs: 512  #first iteration, 512; other iterations, train more epochs 
-  train_workers: 1 # data loader workers
+  train_workers: 16 # data loader workers
   optim: Adam # Adam or SGD
   lr: 0.01
   step_epoch: 384 #first iteration, 384; other iterations, other epochs 
