@@ -393,10 +393,9 @@ def model_fn_decorator(test=False):
         rgb_voxel=[]
         
         group=groups[0]
-        for i in range(20):
-          for s in range(len(group[i])):
+        for g in group2points[0].keys():
 
-            idxs=group2points[0][group[i][s]]
+            idxs=group2points[0][g] 
             feats=output_feats[idxs] 
             #rgbs=feats[idxs]  
             feat=torch.mean(feats,0)
