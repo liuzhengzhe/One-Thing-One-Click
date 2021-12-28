@@ -42,12 +42,12 @@ cd ..
 
 download the weights and features from [here](https://drive.google.com/file/d/1L4YM25_BLuPM9mVBqLKh_S0Tj46M4Srp/view?usp=sharing) and [here](https://drive.google.com/file/d/1GC0z2JxGCf5Ih3G-tliGaxUq9N7wLdLF/view?usp=sharing), put "_weight.pth" and "_feat.pth" into "code" folder
 
-'''
+```
 cd code
 python test.py --config config/pointgroup_run1_scannet.yaml --pretrain pointgroup_run1_scannet-000005104_weight.pth
 python evaluate.py --pred result/pred/ --gt ../data/gt/
-'''
-
+```
+```
 The results is:
 0 ceiling (0.8940590081687007, 14316085, 16012461)
 1 floor (0.9456448097808065, 12504841, 13223613)
@@ -63,14 +63,14 @@ The results is:
 11 board (0.5766766627544468, 709013, 1229481)
 12 clutter (0.42884354820331394, 5321716, 12409458)
 avg iou:  0.5663008090491227
-
+```
 
 ## Train
 
 We use GPU 0 to train, and GPU 1 for pseudo label updating during training. Please keep GPU 1 free during training. You can choose other GPU to be free in config/pointgroup_run1_scannet.yaml line 6: update_gpu
 
-'''
+```
 mkdir train_cuda
 cp ../data/gt_train/* train_cuda/
 python train.py --config config/pointgroup_run1_scannet.yaml
-'''
+```
