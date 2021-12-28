@@ -1,0 +1,2 @@
+python train.py --config config/pointgroup_run1_scannet.yaml
+python test_fortrain.py --config config/pointgroup_run1_scannet.yaml --pretrain exp/train_cuda/pointgroup/pointgroup_run1_scannet/pointgroup_run1_scannet-000003500_weight.pth

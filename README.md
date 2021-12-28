@@ -7,6 +7,10 @@ This code is based on PointGroup https://github.com/llijiang/PointGroup
 
 **Authors**: Zhengzhe Liu, Xiaojuan Qi, Chi-Wing Fu
 
+**Update on Dec 28, 2021: release the super-voxel generation, code and model on S3DIS. Please see the "s3dis" folder. **
+
+<img src="./data/otoc.PNG" width="900"/>
+
 ## Installation
 
 ### Requirements
