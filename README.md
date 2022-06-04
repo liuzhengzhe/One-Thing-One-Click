@@ -7,7 +7,7 @@ This code is based on PointGroup https://github.com/llijiang/PointGroup
 
 **Authors**: Zhengzhe Liu, Xiaojuan Qi, Chi-Wing Fu
 
-<img src="./data/otoc.PNG" width="900"/>
+<img src="one-thing-one-click.PNG" width="900"/>
 
 ## Update on Jun 03, 2022: extend One-Thing-One-Click to instance segmentation. Please see the "instance_seg" folder. 
 ## Update on Jun 03, 2022: a new version on Scannet, achieves comparable performance on "cvpr2021_version". Please see the "scannet" folder. 
