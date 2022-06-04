@@ -17,7 +17,7 @@ Please follow "Data Preparation" in the "cvpr2021_version" folder. Copy training
 
 ## Inference and Evaluation
 
-download the weights and features from [here]() and [here]()
+download the weights and features from [here](https://drive.google.com/drive/folders/1PZtEsCsEBMAK_ZUXlMl_xTZmOeqc8eER?usp=sharing) 
 
 
 ```

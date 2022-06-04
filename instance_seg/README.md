@@ -19,7 +19,7 @@ Please follow "Data Preparation" in the "cvpr2021_version" folder. Copy training
 
 ## Inference and Evaluation
 
-download the weights and features from [here](https://drive.google.com/file/d/1L4YM25_BLuPM9mVBqLKh_S0Tj46M4Srp/view?usp=sharing) and [here](https://drive.google.com/file/d/1GC0z2JxGCf5Ih3G-tliGaxUq9N7wLdLF/view?usp=sharing), put "_weight.pth" and "_feat.pth". 
+download the weights and features from [here](https://drive.google.com/drive/folders/1LmIAPpk1m0PtVIk8m4EBFHjGzWsPyyAo?usp=sharing)
 
 
 ```
@@ -64,7 +64,7 @@ We use GPU 0 to train, and GPU 1 for pseudo label updating during training. Plea
 
 copy the generated training data to "train_cuda", and use one-thing-one-click semantic segmentation model as an initialization. 
 
-put models from [scannet model]() to exp/train_cuda/pointgroup/pointgroup_run_init_scannet/
+put models from [scannet model](https://drive.google.com/drive/folders/1PZtEsCsEBMAK_ZUXlMl_xTZmOeqc8eER?usp=sharing) to exp/train_cuda/pointgroup/pointgroup_run_init_scannet/
 
 Step 1: Fix the backbone, train the offset weights for around 150 epochs. 
 ```
