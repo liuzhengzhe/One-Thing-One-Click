@@ -8,11 +8,11 @@ Code for the paper [One Thing One Click: A Self-Training Approach for Weakly Sup
 
 <img src="one-thing-one-click.PNG" width="900"/>
 
-# Update on April 16, 2023: One Thing One Click++ is on [Arxiv](https://arxiv.org/abs/2303.14727), codes have been released. 
-# Update on Jun 03, 2022: extend One-Thing-One-Click to instance segmentation. Please see the "instance_seg" folder. 
-# Update on Jun 03, 2022: a new version on Scannet, achieves comparable performance on "cvpr2021_version". Please see the "scannet" folder. 
-# Update on Dec 28, 2021: release the super-voxel generation, code and model on S3DIS. Please see the "s3dis" folder. 
-# CVPR 2021 Version: Please see the "cvpr2021_version" folder. 
+ Update on April 16, 2023: One Thing One Click++ is on [Arxiv](https://arxiv.org/abs/2303.14727), codes have been released. 
+ Update on Jun 03, 2022: extend One-Thing-One-Click to instance segmentation. Please see the "instance_seg" folder. 
+ Update on Jun 03, 2022: a new version on Scannet, achieves comparable performance on "cvpr2021_version". Please see the "scannet" folder. 
+ Update on Dec 28, 2021: release the super-voxel generation, code and model on S3DIS. Please see the "s3dis" folder. 
+ CVPR 2021 Version: Please see the "cvpr2021_version" folder. 
 
 
 ## Acknowledgement
